@@ -5,6 +5,7 @@ import {
 	useRequestDeleteTodo,
 	useRequestGetTodos,
 	useRequestUpdateTodo,
+	useRequestToggleCompletedTodo,
 } from './hooks/index'
 import styles from './app.module.css'
 import { AppContext } from './context'
@@ -16,6 +17,7 @@ export const App = () => {
 	const [editId, setEditId] = useState(false)
 	const [sortTitle, setSortTitle] = useState(false)
 	const [search, setSearch] = useState('')
+	const [completed, setCompleted] = useState(false)
 
 	const { isLoadingJsonServerComponent } = useRequestGetTodos(
 		refreshTodos,
@@ -43,6 +45,12 @@ export const App = () => {
 		todo
 	)
 
+	const { requestUpdateCompletedTodo } = useRequestToggleCompletedTodo(
+		refreshTodos,
+		setRefreshTodos,
+		completed
+	)
+
 	const onSubmit = (e) => {
 		e.preventDefault()
 
@@ -68,6 +76,9 @@ export const App = () => {
 	const sortHandler = () =>
 		sortTitle ? setSortTitle(false) : setSortTitle(true)
 
+	const toggleCompletedHandler = () =>
+		completed ? setCompleted(false) : setCompleted(true)
+
 	const appData = {
 		todo,
 		setTodo,
@@ -81,12 +92,14 @@ export const App = () => {
 		setSortTitle,
 		search,
 		setSearch,
-    requestAddTodo,
+		requestAddTodo,
 		requestUpdateTodo,
 		requestDeleteTodo,
-    isUpdating,
+		isUpdating,
 		setIsUpdating,
-    onSubmit,
+		onSubmit,
+    toggleCompletedHandler,
+    requestUpdateCompletedTodo,
 	}
 
 	return (
@@ -102,7 +115,7 @@ export const App = () => {
 					className="input-field"
 				/>
 				<p></p>
-				<TodoForm/>
+				<TodoForm />
 				<p></p>
 				<button
 					className={styles.btnBrown}

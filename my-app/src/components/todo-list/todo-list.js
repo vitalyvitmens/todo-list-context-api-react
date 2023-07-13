@@ -10,12 +10,22 @@ export const TodoList = () => {
 		todo,
 		setTodo,
 		setIsUpdating,
+		toggleCompletedHandler,
+		requestUpdateCompletedTodo,
 	} = useContext(AppContext)
 
-	return todosServer.map(({ id, title }) => (
+	return todosServer.map(({ id, title, completed }) => (
 		<ol key={id}>
 			<span>{id}</span>
-			{title}
+			<div
+				className={completed ? styles.todoLineThrough : styles.todo}
+				onClick={() => {
+					toggleCompletedHandler()
+					requestUpdateCompletedTodo(id)
+				}}
+			>
+				{title}
+			</div>
 			<button
 				className={!todo ? styles.updateBtnYellow : styles.updateBtnGreen}
 				onClick={() => {
