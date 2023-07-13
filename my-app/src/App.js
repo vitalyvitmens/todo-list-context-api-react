@@ -5,7 +5,7 @@ import {
 	useRequestDeleteTodo,
 	useRequestGetTodos,
 	useRequestUpdateTodo,
-} from './json-server-hooks/index'
+} from './hooks/index'
 import styles from './app.module.css'
 import { AppContext } from './context'
 
@@ -105,7 +105,7 @@ export const App = () => {
 				<TodoForm/>
 				<p></p>
 				<button
-					className={styles.btnGreen}
+					className={styles.btnBrown}
 					onClick={sortHandler}
 					disabled={todosServer.length === 0}
 				>
