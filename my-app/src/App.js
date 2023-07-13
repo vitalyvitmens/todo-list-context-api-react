@@ -7,6 +7,7 @@ import {
 	useRequestUpdateTodo,
 } from './json-server-hooks/index'
 import styles from './app.module.css'
+import { AppContext } from './context'
 
 export const App = () => {
 	const [todo, setTodo] = useState('')
@@ -67,58 +68,59 @@ export const App = () => {
 	const sortHandler = () =>
 		sortTitle ? setSortTitle(false) : setSortTitle(true)
 
+	const appData = {
+		todo,
+		setTodo,
+		todosServer,
+		setTodosServer,
+		refreshTodos,
+		setRefreshTodos,
+		editId,
+		setEditId,
+		sortTitle,
+		setSortTitle,
+		search,
+		setSearch,
+    requestAddTodo,
+		requestUpdateTodo,
+		requestDeleteTodo,
+    isUpdating,
+		setIsUpdating,
+    onSubmit,
+	}
+
 	return (
-		<div className={styles.container}>
-			<h2>My To-Do List</h2>
-			<input
-				type="text"
-				value={search}
-				name="search-todo"
-				placeholder="Найти задачу..."
-				onChange={({ target }) => setSearch(target.value)}
-				className="input-field"
-			/>
-			<p></p>
-			<TodoForm
-				onSubmit={onSubmit}
-				todo={todo}
-				editId={editId}
-				setTodo={setTodo}
-				requestAddTodo={requestAddTodo}
-				isUpdating={isUpdating}
-			/>
-			<p></p>
-			<button
-				className={styles.btnGreen}
-				onClick={sortHandler}
-				disabled={todosServer.length === 0}
-			>
-				{sortTitle
-					? 'Отфильтровать задачи по id'
-					: 'Отфильтровать задачи по алфавиту'}
-			</button>
-			{isLoadingJsonServerComponent ? (
-				<Loader />
-			) : search ? (
-				<TodoListSearch
-					todo={todo}
-					todosServer={todosServer}
-					setTodo={setTodo}
-					requestUpdateTodo={requestUpdateTodo}
-					requestDeleteTodo={requestDeleteTodo}
-					setIsUpdating={setIsUpdating}
-					search={search}
+		<AppContext.Provider value={appData}>
+			<div className={styles.container}>
+				<h2>My To-Do List</h2>
+				<input
+					type="text"
+					value={search}
+					name="search-todo"
+					placeholder="Найти задачу..."
+					onChange={({ target }) => setSearch(target.value)}
+					className="input-field"
 				/>
-			) : (
-				<TodoList
-					todo={todo}
-					todosServer={todosServer}
-					setTodo={setTodo}
-					requestUpdateTodo={requestUpdateTodo}
-					requestDeleteTodo={requestDeleteTodo}
-					setIsUpdating={setIsUpdating}
-				/>
-			)}
-		</div>
+				<p></p>
+				<TodoForm/>
+				<p></p>
+				<button
+					className={styles.btnGreen}
+					onClick={sortHandler}
+					disabled={todosServer.length === 0}
+				>
+					{sortTitle
+						? 'Отфильтровать задачи по id'
+						: 'Отфильтровать задачи по алфавиту'}
+				</button>
+				{isLoadingJsonServerComponent ? (
+					<Loader />
+				) : search ? (
+					<TodoListSearch />
+				) : (
+					<TodoList />
+				)}
+			</div>
+		</AppContext.Provider>
 	)
 }
