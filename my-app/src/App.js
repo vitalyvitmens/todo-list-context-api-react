@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TodoForm, TodoList, TodoListSearch, Loader } from './components'
+import { TodoForm, TodoList, Loader } from './components'
 import {
 	useRequestAddTodo,
 	useRequestDeleteTodo,
@@ -91,7 +91,6 @@ export const App = () => {
 		sortTitle,
 		setSortTitle,
 		search,
-		setSearch,
 		requestAddTodo,
 		requestUpdateTodo,
 		requestDeleteTodo,
@@ -126,7 +125,7 @@ export const App = () => {
 						? 'Отфильтровать задачи по id'
 						: 'Отфильтровать задачи по алфавиту'}
 				</button>
-				{isLoading ? <Loader /> : search ? <TodoListSearch /> : <TodoList />}
+				{isLoading ? <Loader /> : <TodoList />}
 			</div>
 		</AppContext.Provider>
 	)
