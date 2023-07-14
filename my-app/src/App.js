@@ -19,7 +19,7 @@ export const App = () => {
 	const [search, setSearch] = useState('')
 	const [completed, setCompleted] = useState(false)
 
-	const { isLoadingJsonServerComponent } = useRequestGetTodos(
+	const { isLoading } = useRequestGetTodos(
 		refreshTodos,
 		setTodosServer,
 		sortTitle
@@ -98,8 +98,8 @@ export const App = () => {
 		isUpdating,
 		setIsUpdating,
 		onSubmit,
-    toggleCompletedHandler,
-    requestUpdateCompletedTodo,
+		toggleCompletedHandler,
+		requestUpdateCompletedTodo,
 	}
 
 	return (
@@ -126,13 +126,7 @@ export const App = () => {
 						? 'Отфильтровать задачи по id'
 						: 'Отфильтровать задачи по алфавиту'}
 				</button>
-				{isLoadingJsonServerComponent ? (
-					<Loader />
-				) : search ? (
-					<TodoListSearch />
-				) : (
-					<TodoList />
-				)}
+				{isLoading ? <Loader /> : search ? <TodoListSearch /> : <TodoList />}
 			</div>
 		</AppContext.Provider>
 	)
