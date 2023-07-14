@@ -91,6 +91,7 @@ export const App = () => {
 		sortTitle,
 		setSortTitle,
 		search,
+		setSearch,
 		requestAddTodo,
 		requestUpdateTodo,
 		requestDeleteTodo,
@@ -99,32 +100,13 @@ export const App = () => {
 		onSubmit,
 		toggleCompletedHandler,
 		requestUpdateCompletedTodo,
+		sortHandler,
 	}
 
 	return (
 		<AppContext.Provider value={appData}>
 			<div className={styles.container}>
-				<h2>My To-Do List</h2>
-				<input
-					type="text"
-					value={search}
-					name="search-todo"
-					placeholder="Найти задачу..."
-					onChange={({ target }) => setSearch(target.value)}
-					className="input-field"
-				/>
-				<p></p>
 				<TodoForm />
-				<p></p>
-				<button
-					className={styles.btnBrown}
-					onClick={sortHandler}
-					disabled={todosServer.length === 0}
-				>
-					{sortTitle
-						? 'Отфильтровать задачи по id'
-						: 'Отфильтровать задачи по алфавиту'}
-				</button>
 				{isLoading ? <Loader /> : <TodoList />}
 			</div>
 		</AppContext.Provider>
