@@ -2,7 +2,7 @@
   "todos": [
     {
       "title": "купи молоко",
-      "completed": true,
+      "completed": false,
       "id": 1
     },
     {

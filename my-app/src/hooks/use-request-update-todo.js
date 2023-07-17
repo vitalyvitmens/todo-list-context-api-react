@@ -1,15 +1,11 @@
-import { useState } from 'react'
-
 export const useRequestUpdateTodo = (
 	refreshTodos,
 	setRefreshTodos,
 	todo,
 	setTodo
 ) => {
-	const [isUpdating, setIsUpdating] = useState(false)
-
 	const requestUpdateTodo = (id) => {
-		setIsUpdating(true)
+		// setIsUpdating(true)
 
 		fetch(`http://localhost:8204/todos/${id}`, {
 			method: 'PUT',
@@ -24,12 +20,10 @@ export const useRequestUpdateTodo = (
 				setTodo('')
 				setRefreshTodos(!refreshTodos)
 			})
-			.finally(() => setIsUpdating(false))
+			// .finally(() => setIsUpdating(false))
 	}
 
 	return {
-		isUpdating,
 		requestUpdateTodo,
-		setIsUpdating,
 	}
 }

@@ -43,16 +43,6 @@ export const TodoForm = () => {
 			>
 				Добавить
 			</button>
-			<p></p>
-			<button
-				className={styles.btnBrown}
-				onClick={sortHandler}
-				disabled={todosServer.length === 0}
-			>
-				{sortTitle
-					? 'Отфильтровать задачи по id'
-					: 'Отфильтровать задачи по алфавиту'}
-			</button>
 		</form>
 	)
 }
