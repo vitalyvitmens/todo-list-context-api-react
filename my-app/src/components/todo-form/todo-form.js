@@ -4,7 +4,6 @@ import styles from './todo-form.module.css'
 
 export const TodoForm = () => {
 	const {
-		todosServer,
 		onSubmit,
 		todo,
 		setTodo,
@@ -12,8 +11,6 @@ export const TodoForm = () => {
 		isUpdating,
 		search,
 		setSearch,
-		sortTitle,
-		sortHandler,
 	} = useContext(AppContext)
 
 	return (

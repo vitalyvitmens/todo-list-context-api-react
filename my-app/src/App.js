@@ -57,7 +57,6 @@ export const App = () => {
     todo,
     setTodo,
 		todosServer,
-		setTodosServer,
 		refreshTodos,
 		setRefreshTodos,
 		search,
