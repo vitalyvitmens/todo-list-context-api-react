@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 import { AppContext } from '../../context'
 import styles from './todo-list.module.css'
 
@@ -15,8 +15,6 @@ export const TodoList = () => {
 		sortTitle,
 		setSortTitle,
 	} = useContext(AppContext)
-
-	const [isUpdating, setIsUpdating] = useState(false)
 
 	const sortHandler = () =>
 		sortTitle ? setSortTitle(false) : setSortTitle(true)
@@ -42,7 +40,6 @@ export const TodoList = () => {
 						className={!todo ? styles.updateBtnYellow : styles.updateBtnGreen}
 						onClick={() => {
 							if (todo === '') {
-								setIsUpdating(true)
 								setTodo(title)
 							} else {
 								requestUpdateTodo(id)

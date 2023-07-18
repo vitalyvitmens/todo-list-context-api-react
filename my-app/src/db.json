@@ -29,11 +29,6 @@
       "title": "арбуз",
       "completed": false,
       "id": 6
-    },
-    {
-      "title": "банан",
-      "completed": true,
-      "id": 7
     }
   ]
 }

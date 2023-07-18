@@ -5,7 +5,6 @@ export const useRequestUpdateTodo = (
 	setTodo
 ) => {
 	const requestUpdateTodo = (id) => {
-		// setIsUpdating(true)
 
 		fetch(`http://localhost:8204/todos/${id}`, {
 			method: 'PUT',
@@ -20,7 +19,6 @@ export const useRequestUpdateTodo = (
 				setTodo('')
 				setRefreshTodos(!refreshTodos)
 			})
-			// .finally(() => setIsUpdating(false))
 	}
 
 	return {
