@@ -8,7 +8,6 @@ export const TodoForm = () => {
 		todo,
 		setTodo,
 		requestAddTodo,
-		isUpdating,
 		search,
 		setSearch,
 	} = useContext(AppContext)
@@ -33,7 +32,7 @@ export const TodoForm = () => {
 				onChange={(e) => setTodo(e.target.value)}
 			/>
 			<button
-				disabled={isUpdating || todo === '' || search}
+				disabled={ todo === '' || search}
 				className={styles.btnBlue}
 				type="submit"
 				onClick={requestAddTodo}
