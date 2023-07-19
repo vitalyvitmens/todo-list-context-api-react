@@ -27,7 +27,7 @@
     },
     {
       "title": "арбуз",
-      "completed": false,
+      "completed": true,
       "id": 6
     }
   ]
