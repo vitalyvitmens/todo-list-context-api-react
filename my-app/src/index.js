@@ -7,7 +7,9 @@ import { TodoProvider } from './hooks/useTodos'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
-	<TodoProvider>
-		<App />
-	</TodoProvider>
+	<React.StrictMode>
+		<TodoProvider>
+			<App />
+		</TodoProvider>
+	</React.StrictMode>
 )

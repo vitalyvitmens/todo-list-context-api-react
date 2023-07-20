@@ -5,12 +5,12 @@ import { useTodo } from '../../hooks/useTodos'
 export const TodoForm = () => {
 	const [inputValue, setInputValue] = useState('')
 
-	const { input, requestAddTodo, edit, requestUpdateTodo, search, setSearch } =
+	const { input, requestAddTodo, edit, requestUpdateTodo, search, setSearch, inputCurrent } =
 		useTodo()
 
 	useEffect(() => {
-		setInputValue(input.current)
-	}, [input.current])
+		setInputValue(inputCurrent)
+	}, [inputCurrent])
 
 	const handleSubmit = (e) => {
 		e.preventDefault()

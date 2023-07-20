@@ -8,6 +8,7 @@ export const useTodo = () => {
 
 export const TodoProvider = ({ children }) => {
 	const input = useRef('')
+	let inputCurrent = input.current
 	const [loading, setLoading] = useState(false)
 	const [refresh, setRefresh] = useState(false)
 	const [todosServer, setTodos] = useState([])
@@ -55,7 +56,10 @@ export const TodoProvider = ({ children }) => {
 				.then(() => {
 					handleRefresh()
 				})
-				.finally(() => setLoading(false))
+				.finally(() => {
+					setLoading(false)
+					input.current = ''
+				})
 		}
 	}
 
@@ -73,8 +77,8 @@ export const TodoProvider = ({ children }) => {
 				handleRefresh()
 			})
 			.finally(() => {
-				input.current = ''
 				setLoading(false)
+				input.current = ''
 			})
 	}
 
@@ -114,6 +118,7 @@ export const TodoProvider = ({ children }) => {
 				setSearch,
 				setSort,
 				sort,
+				inputCurrent,
 			}}
 		>
 			{children}
