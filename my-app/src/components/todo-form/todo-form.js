@@ -1,23 +1,29 @@
-import { useContext } from 'react'
-import { AppContext } from '../../context'
+import { useEffect, useState } from 'react'
 import styles from './todo-form.module.css'
+import { useTodo } from '../../hooks/useTodos'
 
 export const TodoForm = () => {
-	const {
-		todosServer,
-		onSubmit,
-		todo,
-		setTodo,
-		requestAddTodo,
-		isUpdating,
-		search,
-		setSearch,
-		sortTitle,
-		sortHandler,
-	} = useContext(AppContext)
+	const [inputValue, setInputValue] = useState('')
+
+	const { input, requestAddTodo, edit, requestUpdateTodo, search, setSearch } =
+		useTodo()
+
+	useEffect(() => {
+		setInputValue(input.current)
+	}, [input.current])
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		input.current = inputValue
+		if (edit?.id) {
+			requestUpdateTodo(edit.id)
+		} else {
+			requestAddTodo()
+		}
+	}
 
 	return (
-		<form className={styles.form} onSubmit={onSubmit}>
+		<form className={styles.form} onSubmit={handleSubmit}>
 			<h2>My To-Do List</h2>
 			<input
 				type="text"
@@ -30,18 +36,17 @@ export const TodoForm = () => {
 			<p></p>
 			<input
 				type="text"
-				value={todo}
+				value={inputValue}
 				name="todo-input"
 				placeholder="Новая задача"
-				onChange={(e) => setTodo(e.target.value)}
+				onChange={(e) => setInputValue(e.target.value)}
 			/>
 			<button
-				disabled={isUpdating || todo === '' || search}
+				disabled={inputValue === '' || search}
 				className={styles.btnBlue}
 				type="submit"
-				onClick={requestAddTodo}
 			>
-				Добавить
+				{edit ? 'Обновить' : 'Добавить'}
 			</button>
 		</form>
 	)
