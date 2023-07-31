@@ -1,16 +1,21 @@
 import { useContext } from 'react'
 import { AppContext } from '../../context'
+import {useSelector} from 'react-redux'
+import {selectTodosServer, selectTodo, selectSearch} from'../../selectors'
 import styles from './todo-list.module.css'
 
 export const TodoList = () => {
+  // const todosServer = useSelector(selectTodosServer)
+  // const todo = useSelector(selectTodo)
+  // const search = useSelector(selectSearch)
 	const {
-		todosServer,
+    search,
+    todosServer,
+    todo,
 		requestUpdateTodo,
 		requestDeleteTodo,
-		todo,
 		setTodo,
 		setIsUpdating,
-    search,
 		toggleCompletedHandler,
 		requestUpdateCompletedTodo,
 	} = useContext(AppContext)

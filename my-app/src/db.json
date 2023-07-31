@@ -32,7 +32,7 @@
     },
     {
       "title": "банан",
-      "completed": true,
+      "completed": false,
       "id": 7
     }
   ]
