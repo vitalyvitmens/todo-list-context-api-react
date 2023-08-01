@@ -1,1 +1,1 @@
-export const selectSortTitle = (state) => state.sortTitle
+export const selectSortTitle = (state) => state.sortState.sortTitle

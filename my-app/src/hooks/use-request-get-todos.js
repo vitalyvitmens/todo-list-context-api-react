@@ -1,24 +1,33 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {selectIsLoading, selectSortTitle, selectTodosServer, selectRefreshTodos } from '../selectors'
+import { setIsLoadingActionCreator, setTodosServerActionCreator} from '../../actions'
 
-export const useRequestGetTodos = (refreshTodos, setTodosServer, sortTitle) => {
-	const [isLoading, setIsLoading] = useState(false)
+export const useRequestGetTodos = (
+
+  ) => {
+    const isLoading = useSelector(selectIsLoading)
+    const refreshTodos = useSelector(selectRefreshTodos)
+    const sortTitle = useSelector(selectSortTitle)
+
+    const dispatch = useDispatch()
 
 	useEffect(() => {
-		setIsLoading(true)
+		dispatch(setIsLoadingActionCreator(true))
 		sortTitle
 			? fetch('http://localhost:8204/todos?_sort=title')
 					.then((loadedData) => loadedData.json())
 					.then((loadedTodo) => {
-						setTodosServer(loadedTodo)
+						dispatch(setTodosServerActionCreator(loadedTodo))
 					})
-					.finally(() => setIsLoading(false))
+					.finally(() => dispatch(setIsLoadingActionCreator(false)))
 			: fetch('http://localhost:8204/todos')
 					.then((loadedData) => loadedData.json())
 					.then((loadedTodo) => {
-						setTodosServer(loadedTodo)
+						dispatch(setTodosServerActionCreator(loadedTodo))
 					})
-					.finally(() => setIsLoading(false))
-	}, [refreshTodos, sortTitle, setTodosServer])
+					.finally(() => dispatch(setIsLoadingActionCreator(false)))
+	}, [isLoading, refreshTodos, sortTitle])
 
 	return {
 		isLoading: isLoading,

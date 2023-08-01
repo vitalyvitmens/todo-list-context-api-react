@@ -1,1 +1,1 @@
-export const selectIsUpdating = (state) => state.isUpdating
+export const selectIsUpdating = (state) => state.statusState.isUpdating

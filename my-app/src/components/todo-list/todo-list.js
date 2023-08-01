@@ -1,24 +1,18 @@
-import { useContext } from 'react'
-import { AppContext } from '../../context'
-import {useSelector} from 'react-redux'
-import {selectTodosServer, selectTodo, selectSearch} from'../../selectors'
+import {useSelector, useDispatch} from 'react-redux'
+import {selectTodosServer, selectTodo, selectSearch, selectCompleted } from '../../selectors'
+import { setTodoActionCreator, toggleCompletedHandlerActionCreator, setIsUpdatingActionCreator} from '../../actions'
+import {requestUpdateTodo, requestUpdateCompletedTodo, requestDeleteTodo} from '../../hooks'
 import styles from './todo-list.module.css'
 
 export const TodoList = () => {
-  // const todosServer = useSelector(selectTodosServer)
-  // const todo = useSelector(selectTodo)
-  // const search = useSelector(selectSearch)
-	const {
-    search,
-    todosServer,
-    todo,
-		requestUpdateTodo,
-		requestDeleteTodo,
-		setTodo,
-		setIsUpdating,
-		toggleCompletedHandler,
-		requestUpdateCompletedTodo,
-	} = useContext(AppContext)
+  const search = useSelector(selectSearch)
+  const todosServer = useSelector(selectTodosServer)
+  const todo = useSelector(selectTodo)
+  const completed = useSelector(selectCompleted)
+
+  const dispatch = useDispatch()
+
+  const toggleCompletedHandler = () => toggleCompletedHandlerActionCreator(completed)
 
 	return todosServer
 		.filter((todo) => {
@@ -30,7 +24,7 @@ export const TodoList = () => {
 				<div
 					className={completed ? styles.todoLineThrough : styles.todo}
 					onClick={() => {
-						toggleCompletedHandler()
+						dispatch(toggleCompletedHandler())
 						requestUpdateCompletedTodo(id)
 					}}
 				>
@@ -40,11 +34,11 @@ export const TodoList = () => {
 					className={!todo ? styles.updateBtnYellow : styles.updateBtnGreen}
 					onClick={() => {
 						if (todo === '') {
-							setIsUpdating(true)
-							setTodo(title)
+              dispatch(setIsUpdatingActionCreator(true))
+              dispatch(setTodoActionCreator(title))
 						} else {
 							requestUpdateTodo(id)
-							setTodo('')
+              dispatch(setTodoActionCreator(''))
 						}
 					}}
 				>

@@ -1,12 +1,19 @@
 import { useState } from 'react'
+import {useSelector} from 'react-redux'
+import {selectIsUpdating, selectTodo, selectTodosServer, selectRefreshTodos } from '../selectors'
 
 export const useRequestUpdateTodo = (
-	refreshTodos,
-	setRefreshTodos,
-	todo,
-	setTodo
+	// refreshTodos,
+	// setRefreshTodos,
+	// todo,
+	// setTodo
 ) => {
-	const [isUpdating, setIsUpdating] = useState(false)
+  const isUpdating = useSelector(selectIsUpdating)
+  const refreshTodos = useSelector(selectRefreshTodos)
+  const todo = useSelector(selectTodo)
+  const todosServer = useSelector(selectTodosServer)
+
+	// const [isUpdating, setIsUpdating] = useState(false)
 
 	const requestUpdateTodo = (id) => {
 		setIsUpdating(true)

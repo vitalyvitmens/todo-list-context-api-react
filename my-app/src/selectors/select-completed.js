@@ -1,1 +1,1 @@
-export const selectCompleted = (state) => state.completed
+export const selectCompleted = (state) => state.todosState.completed

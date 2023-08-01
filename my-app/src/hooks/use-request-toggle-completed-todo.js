@@ -1,8 +1,14 @@
+import {useSelector, useDispatch} from 'react-redux'
+import {selectRefreshTodos, selectCompleted } from '../selectors'
+import { setRefreshTodosActionCreator} from '../../actions'
+
 export const useRequestToggleCompletedTodo = (
-	refreshTodos,
-	setRefreshTodos,
-	completed
 ) => {
+  const refreshTodos = useSelector(selectRefreshTodos)
+  const completed = useSelector(selectCompleted)
+
+  const dispatch = useDispatch()
+
 	const requestUpdateCompletedTodo = (id) => {
 		fetch(`http://localhost:8204/todos/${id}`, {
 			method: 'PATCH',
@@ -13,7 +19,7 @@ export const useRequestToggleCompletedTodo = (
 		})
 			.then((rawResponse) => rawResponse.json())
 			.then((response) => {
-				setRefreshTodos(!refreshTodos)
+        dispatch(setRefreshTodosActionCreator(!refreshTodos))
 			})
 	}
 

@@ -1,1 +1,1 @@
-export const selectIsDeleting = (state) => state.isDeleting
+export const selectIsDeleting = (state) => state.statusState.isDeleting
