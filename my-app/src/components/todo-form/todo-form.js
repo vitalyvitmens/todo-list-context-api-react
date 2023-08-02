@@ -1,7 +1,6 @@
 import {useSelector, useDispatch} from 'react-redux'
 import {selectTodosServer, selectTodo, selectIsUpdating, selectSearch, selectSortTitle, selectEditId} from '../../selectors'
-import {requestAddTodo} from '../../hooks'
-import {sortHandlerActionCreator, setTodosServerActionCreator, setEditIdActionCreator, setTodoActionCreator, setSearchActionCreator} from '../../actions'
+import {sortHandlerActionCreator, setTodosServerActionCreator, setEditIdActionCreator, setTodoActionCreator, setSearchActionCreator, addTodoAsync} from '../../actions'
 import styles from './todo-form.module.css'
 
 export const TodoForm = () => {
@@ -20,7 +19,6 @@ export const TodoForm = () => {
 
   const onSubmit = (e) => {
 		e.preventDefault()
-    dispatch()
 
 		if (editId) {
 			const editTodo = todosServer.find((i) => i.id === editId)
@@ -45,6 +43,10 @@ export const TodoForm = () => {
 
   const onChangeTodo = (e) => dispatch(setTodoActionCreator(e.target.value))
 
+  const addTodo = () => {
+    dispatch(addTodoAsync)
+  }
+
 	return (
 		<form className={styles.form} onSubmit={onSubmit}>
 			<h2>My To-Do List</h2>
@@ -68,7 +70,7 @@ export const TodoForm = () => {
 				disabled={isUpdating || todo === '' || search}
 				className={styles.btnBlue}
 				type="submit"
-				onClick={requestAddTodo}
+				onClick={addTodo}
 			>
 				Добавить
 			</button>

@@ -1,31 +1,58 @@
-import {useSelector, useDispatch} from 'react-redux'
-import {selectTodosServer, selectTodo, selectSearch, selectCompleted } from '../../selectors'
-import { setTodoActionCreator, toggleCompletedHandlerActionCreator, setIsUpdatingActionCreator} from '../../actions'
-import {requestUpdateTodo, requestUpdateCompletedTodo, requestDeleteTodo} from '../../hooks'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+	selectTodosServer,
+	selectTodo,
+	selectSearch,
+	selectCompleted,
+} from '../../selectors'
+import {
+	setTodoActionCreator,
+	toggleCompletedHandlerActionCreator,
+	setIsUpdatingActionCreator,
+	deleteTodoAsync,
+	updateTodoAsync,
+  toggleCompletedTodoAsync,
+} from '../../actions'
 import styles from './todo-list.module.css'
 
-export const TodoList = () => {
-  const search = useSelector(selectSearch)
-  const todosServer = useSelector(selectTodosServer)
-  const todo = useSelector(selectTodo)
-  const completed = useSelector(selectCompleted)
+export const TodoList = ({ id }) => {
+	const search = useSelector(selectSearch)
+	const todosServer = useSelector(selectTodosServer)
+	const todo = useSelector(selectTodo)
+	const completed = useSelector(selectCompleted)
 
-  const dispatch = useDispatch()
+	const dispatch = useDispatch()
 
-  const toggleCompletedHandler = () => toggleCompletedHandlerActionCreator(completed)
+	const toggleCompletedHandler = () =>
+		toggleCompletedHandlerActionCreator(completed)
 
+	// const updateTodo = () => {
+	//   if (todo === '') {
+	//     dispatch(setIsUpdatingActionCreator(true))
+	//     dispatch(setTodoActionCreator(title))
+	//   } else {
+	//     dispatch(updateTodoAsync(id))
+	//     dispatch(setTodoActionCreator(''))
+	//   }
+	// }
+
+	// const deleteTodo = () => {
+	//   dispatch(deleteTodoAsync(id))
+	// }
+
+	console.log(todosServer)
 	return todosServer
 		.filter((todo) => {
 			return search ? todo.title.includes(search) : todo
 		})
 		.map(({ id, title, completed }) => (
 			<ol key={id}>
-			<span>{id}</span>
+				<span>{id}</span>
 				<div
 					className={completed ? styles.todoLineThrough : styles.todo}
 					onClick={() => {
 						dispatch(toggleCompletedHandler())
-						requestUpdateCompletedTodo(id)
+						dispatch(toggleCompletedTodoAsync(id))
 					}}
 				>
 					{title}
@@ -34,11 +61,11 @@ export const TodoList = () => {
 					className={!todo ? styles.updateBtnYellow : styles.updateBtnGreen}
 					onClick={() => {
 						if (todo === '') {
-              dispatch(setIsUpdatingActionCreator(true))
-              dispatch(setTodoActionCreator(title))
+							dispatch(setIsUpdatingActionCreator(true))
+							dispatch(setTodoActionCreator(title))
 						} else {
-							requestUpdateTodo(id)
-              dispatch(setTodoActionCreator(''))
+							dispatch(updateTodoAsync)
+							dispatch(setTodoActionCreator(''))
 						}
 					}}
 				>
@@ -46,7 +73,9 @@ export const TodoList = () => {
 				</button>
 				<button
 					className={styles.deleteBtn}
-					onClick={() => requestDeleteTodo(id)}
+					onClick={() => {
+						dispatch(deleteTodoAsync)
+					}}
 				>
 					X
 				</button>
