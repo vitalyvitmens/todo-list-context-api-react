@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectIsLoading } from './selectors'
 import {
 	getTodosAsync,
-	addTodoAsync,
 	updateTodoAsync,
 	deleteTodoAsync,
 	toggleCompletedTodoAsync,
@@ -17,7 +16,6 @@ export const App = () => {
 
 	useEffect(() => {
 		dispatch(getTodosAsync)
-		dispatch(addTodoAsync)
 		dispatch(updateTodoAsync)
 		dispatch(deleteTodoAsync)
 		dispatch(toggleCompletedTodoAsync)

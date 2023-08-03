@@ -34,6 +34,11 @@
       "title": "банан",
       "completed": false,
       "id": 7
-    }
+    },
+    {
+      "title": "ягода",
+      "completed": false,
+      "id": 8
+   }
   ]
 }

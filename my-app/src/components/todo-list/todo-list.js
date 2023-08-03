@@ -11,11 +11,11 @@ import {
 	setIsUpdatingActionCreator,
 	deleteTodoAsync,
 	updateTodoAsync,
-  toggleCompletedTodoAsync,
+	toggleCompletedTodoAsync,
 } from '../../actions'
 import styles from './todo-list.module.css'
 
-export const TodoList = ({ id }) => {
+export const TodoList = () => {
 	const search = useSelector(selectSearch)
 	const todosServer = useSelector(selectTodosServer)
 	const todo = useSelector(selectTodo)
@@ -35,10 +35,17 @@ export const TodoList = ({ id }) => {
 	//     dispatch(setTodoActionCreator(''))
 	//   }
 	// }
+	const updateTodo = () => {
+		if (todo) {
+			dispatch(updateTodoAsync(todo))
+		}
+	}
 
 	// const deleteTodo = () => {
 	//   dispatch(deleteTodoAsync(id))
 	// }
+
+	const deleteTodo = () => dispatch(deleteTodoAsync())
 
 	console.log(todosServer)
 	return todosServer
@@ -63,20 +70,17 @@ export const TodoList = ({ id }) => {
 						if (todo === '') {
 							dispatch(setIsUpdatingActionCreator(true))
 							dispatch(setTodoActionCreator(title))
+							updateTodo()
 						} else {
 							dispatch(updateTodoAsync)
 							dispatch(setTodoActionCreator(''))
+							updateTodo()
 						}
 					}}
 				>
 					✎
 				</button>
-				<button
-					className={styles.deleteBtn}
-					onClick={() => {
-						dispatch(deleteTodoAsync)
-					}}
-				>
+				<button className={styles.deleteBtn} onClick={deleteTodo}>
 					X
 				</button>
 			</ol>

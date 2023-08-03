@@ -1,23 +1,37 @@
-import {useSelector, useDispatch} from 'react-redux'
-import {selectTodosServer, selectTodo, selectIsUpdating, selectSearch, selectSortTitle, selectEditId} from '../../selectors'
-import {sortHandlerActionCreator, setTodosServerActionCreator, setEditIdActionCreator, setTodoActionCreator, setSearchActionCreator, addTodoAsync} from '../../actions'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+	selectTodosServer,
+	selectTodo,
+	selectIsUpdating,
+	selectSearch,
+	selectSortTitle,
+	selectEditId,
+} from '../../selectors'
+import {
+	sortHandlerActionCreator,
+	setTodosServerActionCreator,
+	setEditIdActionCreator,
+	setTodoActionCreator,
+	setSearchActionCreator,
+	addTodoAsync,
+} from '../../actions'
 import styles from './todo-form.module.css'
 
 export const TodoForm = () => {
-  const todosServer = useSelector(selectTodosServer)
-  const todo = useSelector(selectTodo)
-  const isUpdating = useSelector(selectIsUpdating)
-  const search = useSelector(selectSearch)
-  const sortTitle = useSelector(selectSortTitle)
-  const editId = useSelector(selectEditId)
+	const todosServer = useSelector(selectTodosServer)
+	const todo = useSelector(selectTodo)
+	const isUpdating = useSelector(selectIsUpdating)
+	const search = useSelector(selectSearch)
+	const sortTitle = useSelector(selectSortTitle)
+	const editId = useSelector(selectEditId)
 
-  const dispatch = useDispatch()
+	const dispatch = useDispatch()
 
-  const sortHandler = () => {
-    dispatch(sortHandlerActionCreator(sortTitle))
-  }
+	const sortHandler = () => {
+		dispatch(sortHandlerActionCreator(sortTitle))
+	}
 
-  const onSubmit = (e) => {
+	const onSubmit = (e) => {
 		e.preventDefault()
 
 		if (editId) {
@@ -27,25 +41,27 @@ export const TodoForm = () => {
 					? (t = { id: t.id, todo })
 					: { id: t.id, todo: t.todo }
 			)
-      dispatch(setTodosServerActionCreator(updatedTodos))
-      dispatch(setEditIdActionCreator(0))
-      dispatch(setTodoActionCreator(''))
+			dispatch(setTodosServerActionCreator(updatedTodos))
+			dispatch(setEditIdActionCreator(0))
+			dispatch(setTodoActionCreator(''))
 			return
 		}
 
 		if (todo !== '') {
-      dispatch(setTodosServerActionCreator([{ id: `${todo}-${Date.now()}`, todo }, ...todosServer]))
-      dispatch(setTodoActionCreator(''))
+			dispatch(setTodoActionCreator(''))
 		}
 	}
 
-  const onChangeSearh = ({ target }) => dispatch(setSearchActionCreator(target.value))
+	const onChangeSearh = ({ target }) =>
+		dispatch(setSearchActionCreator(target.value))
 
-  const onChangeTodo = (e) => dispatch(setTodoActionCreator(e.target.value))
+	const onChangeTodo = (e) => dispatch(setTodoActionCreator(e.target.value))
 
-  const addTodo = () => {
-    dispatch(addTodoAsync)
-  }
+	const addTodo = () => {
+		if (todo) {
+			dispatch(addTodoAsync(todo))
+		}
+	}
 
 	return (
 		<form className={styles.form} onSubmit={onSubmit}>

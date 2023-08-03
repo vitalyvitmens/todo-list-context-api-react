@@ -22,16 +22,22 @@ export const todosReducer = (state = initialTodosState, action) => {
 			}
 		}
 
+		// case 'UPDATE_TODO_ASYNC': {
+		// 	const newTodos = state.todosServer.map((todo) => {
+		// 		if (todo.id === action.payload.id) {
+		// 			return action.payload
+		// 		}
+		// 		return todo
+		// 	})
+		// 	return {
+		// 		...state,
+		// 		todosServer: newTodos,
+		// 	}
+		// }
 		case 'UPDATE_TODO_ASYNC': {
-			const newTodos = state.todosServer.map((todo) => {
-				if (todo.id === action.payload.id) {
-					return action.payload
-				}
-				return todo
-			})
 			return {
 				...state,
-				todosServer: newTodos,
+				todosServer: [...state.todosServer, action.payload],
 			}
 		}
 
