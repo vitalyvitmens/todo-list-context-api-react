@@ -86,13 +86,6 @@ export const todosReducer = (state = initialTodosState, action) => {
 			}
 		}
 
-		case 'TOGGLE_COMPLETED_HANDLER_ACTION_CREATOR': {
-			return {
-				...state,
-				todosServer: [...state.todosServer, action.payload],
-			}
-		}
-
 		default:
 			return state
 	}
