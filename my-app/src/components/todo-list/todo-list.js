@@ -3,12 +3,11 @@ import {
 	selectTodosServer,
 	selectTodo,
 	selectSearch,
-	selectCompleted,
 	selectSortTitle,
+	selectIsUpdating,
 } from '../../selectors'
 import {
 	setTodoActionCreator,
-	toggleCompletedHandlerActionCreator,
 	setIsUpdatingActionCreator,
 	deleteTodoAsync,
 	updateTodoAsync,
@@ -21,33 +20,9 @@ export const TodoList = () => {
 	const todosServer = useSelector(selectTodosServer)
 	const todo = useSelector(selectTodo)
 	const sortTitle = useSelector(selectSortTitle)
-	const completed = useSelector(selectCompleted)
+	const isUpdating = useSelector(selectIsUpdating)
 
 	const dispatch = useDispatch()
-
-	const toggleCompletedHandler = () =>
-		toggleCompletedHandlerActionCreator(completed)
-
-	// const updateTodo = () => {
-	//   if (todo === '') {
-	//     dispatch(setIsUpdatingActionCreator(true))
-	//     dispatch(setTodoActionCreator(title))
-	//   } else {
-	//     dispatch(updateTodoAsync(id))
-	//     dispatch(setTodoActionCreator(''))
-	//   }
-	// }
-	const updateTodo = () => {
-		if (todo) {
-			dispatch(updateTodoAsync(todo))
-		}
-	}
-
-	// const deleteTodo = () => {
-	//   dispatch(deleteTodoAsync(id))
-	// }
-
-	const deleteTodo = () => dispatch(deleteTodoAsync())
 
 	const sortedTodosServer = sortTitle
 		? todosServer.sort((a, b) => a.title.localeCompare(b.title))
@@ -63,29 +38,36 @@ export const TodoList = () => {
 				<div
 					className={completed ? styles.todoLineThrough : styles.todo}
 					onClick={() => {
-						dispatch(toggleCompletedHandler())
-						dispatch(toggleCompletedTodoAsync(id))
+						dispatch(toggleCompletedTodoAsync(id, completed ? false : true))
+            console.log(id, completed)
 					}}
 				>
 					{title}
 				</div>
 				<button
-					className={!todo ? styles.updateBtnYellow : styles.updateBtnGreen}
+					className={todo ? styles.updateBtnGreen : styles.updateBtnYellow}
+					// onClick={updateTodoAsync(id, todo)}
 					onClick={() => {
-						if (todo === '') {
-							dispatch(setIsUpdatingActionCreator(true))
+						dispatch(setIsUpdatingActionCreator(true))
+						if (!todo) {
 							dispatch(setTodoActionCreator(title))
-							updateTodo()
+							console.log(id, title, completed)
+							// dispatch(updateTodoAsync(id, todo))
 						} else {
-							dispatch(updateTodoAsync)
+							dispatch(updateTodoAsync(id, todo))
+							console.log(todo)
 							dispatch(setTodoActionCreator(''))
-							updateTodo()
 						}
 					}}
 				>
 					✎
 				</button>
-				<button className={styles.deleteBtn} onClick={deleteTodo}>
+				<button
+					className={styles.deleteBtn}
+					onClick={() => {
+						dispatch(deleteTodoAsync(id))
+					}}
+				>
 					X
 				</button>
 			</ol>

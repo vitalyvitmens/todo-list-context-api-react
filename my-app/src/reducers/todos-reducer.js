@@ -34,12 +34,6 @@ export const todosReducer = (state = initialTodosState, action) => {
 				todosServer: newTodos,
 			}
 		}
-		// case 'UPDATE_TODO_ASYNC': {
-		// 	return {
-		// 		...state,
-		// 		todosServer: [...state.todosServer, action.payload],
-		// 	}
-		// }
 
 		case 'TOGGLE_COMPLETED_TODO_ASYNC': {
 			const newCompleted = state.todosServer.map((todo) => {

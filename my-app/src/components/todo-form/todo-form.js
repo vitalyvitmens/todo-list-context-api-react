@@ -14,6 +14,8 @@ import {
 	setTodoActionCreator,
 	setSearchActionCreator,
 	addTodoAsync,
+	setIsUpdatingActionCreator,
+	updateTodoAsync,
 } from '../../actions'
 import styles from './todo-form.module.css'
 
@@ -43,7 +45,7 @@ export const TodoForm = () => {
 			return
 		}
 
-		if (todo !== '') {
+		if (todo) {
 			dispatch(setTodoActionCreator(''))
 		}
 	}
@@ -55,9 +57,9 @@ export const TodoForm = () => {
 		dispatch(setTodoActionCreator(target.value))
 
 	const addTodo = () => {
-		if (todo) {
-			dispatch(addTodoAsync(todo))
-		}
+		isUpdating
+			? dispatch(setIsUpdatingActionCreator(false))
+			: dispatch(addTodoAsync(todo))
 	}
 
 	const sortHandler = () => {
@@ -86,12 +88,12 @@ export const TodoForm = () => {
 				onChange={onChangeTodo}
 			/>
 			<button
-				disabled={isUpdating || todo === '' || search}
+				disabled={!todo || search}
 				className={styles.btnBlue}
 				type="submit"
 				onClick={addTodo}
 			>
-				Добавить
+				{isUpdating ? 'Обновить' : 'Добавить'}
 			</button>
 			<p></p>
 			<button
