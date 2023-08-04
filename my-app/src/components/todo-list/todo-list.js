@@ -4,6 +4,7 @@ import {
 	selectTodo,
 	selectSearch,
 	selectCompleted,
+	selectSortTitle,
 } from '../../selectors'
 import {
 	setTodoActionCreator,
@@ -19,6 +20,7 @@ export const TodoList = () => {
 	const search = useSelector(selectSearch)
 	const todosServer = useSelector(selectTodosServer)
 	const todo = useSelector(selectTodo)
+	const sortTitle = useSelector(selectSortTitle)
 	const completed = useSelector(selectCompleted)
 
 	const dispatch = useDispatch()
@@ -47,8 +49,11 @@ export const TodoList = () => {
 
 	const deleteTodo = () => dispatch(deleteTodoAsync())
 
-	console.log(todosServer)
-	return todosServer
+	const sortedTodosServer = sortTitle
+		? todosServer.sort((a, b) => a.title.localeCompare(b.title))
+		: todosServer.sort((a, b) => a.id - b.id)
+
+	return sortedTodosServer
 		.filter((todo) => {
 			return search ? todo.title.includes(search) : todo
 		})

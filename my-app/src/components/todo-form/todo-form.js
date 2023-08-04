@@ -27,10 +27,6 @@ export const TodoForm = () => {
 
 	const dispatch = useDispatch()
 
-	const sortHandler = () => {
-		dispatch(sortHandlerActionCreator(sortTitle))
-	}
-
 	const onSubmit = (e) => {
 		e.preventDefault()
 
@@ -55,12 +51,19 @@ export const TodoForm = () => {
 	const onChangeSearh = ({ target }) =>
 		dispatch(setSearchActionCreator(target.value))
 
-	const onChangeTodo = (e) => dispatch(setTodoActionCreator(e.target.value))
+	const onChangeTodo = ({ target }) =>
+		dispatch(setTodoActionCreator(target.value))
 
 	const addTodo = () => {
 		if (todo) {
 			dispatch(addTodoAsync(todo))
 		}
+	}
+
+	const sortHandler = () => {
+		sortTitle
+			? dispatch(sortHandlerActionCreator(false))
+			: dispatch(sortHandlerActionCreator(true))
 	}
 
 	return (
