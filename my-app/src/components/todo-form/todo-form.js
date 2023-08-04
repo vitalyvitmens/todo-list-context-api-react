@@ -15,7 +15,6 @@ import {
 	setSearchActionCreator,
 	addTodoAsync,
 	setIsUpdatingActionCreator,
-	updateTodoAsync,
 } from '../../actions'
 import styles from './todo-form.module.css'
 

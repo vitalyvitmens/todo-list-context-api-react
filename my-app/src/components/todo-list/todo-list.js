@@ -4,7 +4,6 @@ import {
 	selectTodo,
 	selectSearch,
 	selectSortTitle,
-	selectIsUpdating,
 } from '../../selectors'
 import {
 	setTodoActionCreator,
@@ -20,7 +19,6 @@ export const TodoList = () => {
 	const todosServer = useSelector(selectTodosServer)
 	const todo = useSelector(selectTodo)
 	const sortTitle = useSelector(selectSortTitle)
-	const isUpdating = useSelector(selectIsUpdating)
 
 	const dispatch = useDispatch()
 
@@ -39,23 +37,18 @@ export const TodoList = () => {
 					className={completed ? styles.todoLineThrough : styles.todo}
 					onClick={() => {
 						dispatch(toggleCompletedTodoAsync(id, completed ? false : true))
-            console.log(id, completed)
 					}}
 				>
 					{title}
 				</div>
 				<button
 					className={todo ? styles.updateBtnGreen : styles.updateBtnYellow}
-					// onClick={updateTodoAsync(id, todo)}
 					onClick={() => {
 						dispatch(setIsUpdatingActionCreator(true))
 						if (!todo) {
 							dispatch(setTodoActionCreator(title))
-							console.log(id, title, completed)
-							// dispatch(updateTodoAsync(id, todo))
 						} else {
 							dispatch(updateTodoAsync(id, todo))
-							console.log(todo)
 							dispatch(setTodoActionCreator(''))
 						}
 					}}
