@@ -32,12 +32,12 @@
     },
     {
       "title": "банан",
-      "completed": false,
+      "completed": true,
       "id": 7
     },
     {
       "title": "ягода",
-      "completed": true,
+      "completed": false,
       "id": 8
     }
   ]

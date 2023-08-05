@@ -1,4 +1,4 @@
-export const setSearchActionCreator = (data) => ({
+export const setSearchActionCreator = (payload) => ({
   type: 'SET_SEARCH_ACTION_CREATOR',
-  payload: data
+  payload,
  })
