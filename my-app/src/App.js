@@ -1,16 +1,22 @@
-import React from 'react'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { TodoForm, TodoList, Loader } from './components'
+import { selectLoading } from './selectors'
+import { getTodosAsync } from './actions'
 import styles from './app.module.css'
 
-import { useTodo } from './hooks/useTodos'
-
 export const App = () => {
-	const { loading: isLoading } = useTodo()
+	const dispatch = useDispatch()
+	const loading = useSelector(selectLoading)
+
+	useEffect(() => {
+		dispatch(getTodosAsync)
+	}, [dispatch])
 
 	return (
 		<div className={styles.container}>
 			<TodoForm />
-			{isLoading ? <Loader /> : <TodoList />}
+			{loading ? <Loader /> : <TodoList />}
 		</div>
 	)
 }

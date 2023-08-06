@@ -1,9 +1,13 @@
 import styles from './todo-list.module.css'
 import { Todo } from './todo'
 import { useTodo } from '../../hooks/useTodos'
+import {useDispatch} from 'react-redux'
 
 export const TodoList = () => {
+  const dispatch = useDispatch()
 	const { sortedTodos, sort, setSort } = useTodo()
+
+  
 
 	const sortHandler = () => setSort((prev) => !prev)
 

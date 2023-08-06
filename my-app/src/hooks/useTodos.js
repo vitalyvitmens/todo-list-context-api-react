@@ -1,4 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react'
+import { ACTION_TYPE } from '../actions/action-type'
 
 const TodoContext = React.createContext()
 
@@ -9,12 +10,12 @@ export const useTodo = () => {
 export const TodoProvider = ({ children }) => {
 	const input = useRef('')
 	let inputCurrent = input.current
-	const [loading, setLoading] = useState(false)
-	const [refresh, setRefresh] = useState(false)
-	const [todosServer, setTodos] = useState([])
-	const [edit, setEdit] = useState(false)
-	const [search, setSearch] = useState('')
-	const [sort, setSort] = useState(false)
+	// const [loading, setLoading] = useState(false)
+	// const [refresh, setRefresh] = useState(false)
+	// const [todosServer, setTodos] = useState([])
+	// const [edit, setEdit] = useState(false)
+	// const [search, setSearch] = useState('')
+	// const [sort, setSort] = useState(false)
 
 	const handleRefresh = () => {
 		setRefresh((prev) => !prev)
@@ -27,9 +28,7 @@ export const TodoProvider = ({ children }) => {
 		: todosServer
 
 	const sortedTodos = sort
-		? todos.sort(function (a, b) {
-				return a.title.localeCompare(b.title)
-		  })
+		? todos.sort((a, b) => a.title.localeCompare(b.title))
 		: todos.sort((a, b) => a.id - b.id)
 
 	useEffect(() => {
@@ -44,6 +43,13 @@ export const TodoProvider = ({ children }) => {
 
 	const requestAddTodo = (todo) => {
 		if (todo !== '') {
+			dispatchEvent({
+				type: ACTION_TYPE.ADD_TODO,
+				payload: {
+					title: input.current,
+					completed: false,
+				},
+			})
 			setLoading(true)
 			fetch('http://localhost:8204/todos', {
 				method: 'POST',
