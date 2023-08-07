@@ -7,14 +7,3 @@ export const getTodosAsync = async (dispatch) => {
 		payload: todos,
 	})
 }
-
-
-useEffect(() => {
-  setLoading(true)
-  fetch('http://localhost:8204/todos')
-    .then((loadedData) => loadedData.json())
-    .then((loadedTodo) => {
-      setTodos(loadedTodo)
-    })
-    .finally(() => setLoading(false))
-}, [refresh])

@@ -1,12 +1,39 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+	selectInput,
+	selectEdit,
+	selectIsUpdating,
+	selectSearch,
+	selectSortTitle,
+	selectEditId,
+} from '../../selectors'
+import {
+	sortHandlerActionCreator,
+	setTodosServerActionCreator,
+	setEditIdActionCreator,
+	setTodoActionCreator,
+	setSearchActionCreator,
+	addTodoAsync,
+	setIsUpdatingActionCreator,
+	updateTodoAsync,
+} from '../../actions'
 import styles from './todo-form.module.css'
-import { useTodo } from '../../hooks/useTodos'
 
 export const TodoForm = () => {
+	const input = useSelector(selectInput)
+	const edit = useSelector(selectEdit)
+	const isUpdating = useSelector(selectIsUpdating)
+	const search = useSelector(selectSearch)
+	const sortTitle = useSelector(selectSortTitle)
+	const editId = useSelector(selectEditId)
+
 	const [inputValue, setInputValue] = useState('')
 
-	const { input, requestAddTodo, edit, requestUpdateTodo, search, setSearch, inputCurrent } =
-		useTodo()
+	const dispatch = useDispatch()
+
+	// const { requestAddTodo, requestUpdateTodo, setSearch, inputCurrent } =
+	// 	useTodo()
 
 	useEffect(() => {
 		setInputValue(inputCurrent)
@@ -16,9 +43,9 @@ export const TodoForm = () => {
 		e.preventDefault()
 		input.current = inputValue
 		if (edit?.id) {
-			requestUpdateTodo(edit.id)
+			dispatch(updateTodoAsync(edit.id))
 		} else {
-			requestAddTodo()
+			dispatch(addTodoAsync())
 		}
 	}
 
@@ -30,7 +57,9 @@ export const TodoForm = () => {
 				value={search}
 				name="search-todo"
 				placeholder="Найти задачу..."
-				onChange={({ target }) => setSearch(target.value)}
+				onChange={({ target }) =>
+					dispatch(setSearchActionCreator(target.value))
+				}
 				className="input-field"
 			/>
 			<p></p>
